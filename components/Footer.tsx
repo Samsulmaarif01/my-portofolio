@@ -1,29 +1,132 @@
-import { assets } from '@/assets/assets';
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
+import { assets } from '@/assets/assets';
+import { motion } from 'framer-motion';
+import { Github, Linkedin } from 'lucide-react';
 
 interface FooterProps {
   isDarkMode: boolean;
 }
 
 const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
+  const socialLinks = [
+    { name: 'Github', url: 'https://github.com/Samsulmaarif01', Icon: Github },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/samsul-maarif-2b8867335/', Icon: Linkedin }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        when: "beforeChildren",
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 300, damping: 24 }
+    }
+  };
+
+  const emailVariants = {
+    hover: {
+      scale: 1.02,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      }
+    }
+  };
+
+  const socialLinkVariants = {
+    hover: {
+      y: -5,
+      scale: 1.1,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      }
+    }
+  };
+
   return (
-    <div className='mt-20'>
-      <div className='text-center'>
-        <Image src={isDarkMode ? assets.logo_dark : assets.logo} alt='' className='w-36 mx-auto mb-2 '/>
-        <div className='w-max flex items-center gap-2 mx-auto'>
-          <Image src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon} alt='' className='w-6 '/>
-          samsulmaarif1076@gmail.com
-        </div>
-      </div>
-      <div className='text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6'>
-        <p>© Samsul Maarif, All rights reserved.</p>
-        <ul className='flex items-center gap-10 justify-center mt-4 sm:mt-0'>
-          <li><a target='_blank' href="https://github.com/Samsulmaarif01">Github</a></li>
-          <li><a target='_blank' href="https://www.linkedin.com/in/samsul-maarif-2b8867335/">LinkedIn</a></li>
-        </ul>
-      </div>
-    </div>
+    <motion.footer
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={containerVariants}
+      className="mt-20 pb-8"
+    >
+      <motion.div 
+        className="text-center max-w-4xl mx-auto px-4"
+        variants={itemVariants}
+      >
+        <motion.h1 
+          className="text-2xl md:text-3xl font-jakarta font-bold mb-6"
+          variants={itemVariants}
+        >
+          Let&apos;s Connect
+        </motion.h1>
+        
+        <motion.div
+          variants={emailVariants}
+          whileHover="hover"
+          className="w-max flex items-center gap-3 mx-auto bg-gray-50 dark:bg-gray-800/50 px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+        >
+          <Image 
+            src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon} 
+            alt="email icon" 
+            className="w-6"
+          />
+          <span className="font-medium select-all">samsulmaarif1076@gmail.com</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div 
+        variants={itemVariants}
+        className="max-w-6xl mx-auto px-4 mt-16"
+      >
+        <motion.div 
+          className="border-t border-gray-300 dark:border-gray-700 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6"
+        >
+          <motion.p 
+            variants={itemVariants}
+            className="text-gray-600 dark:text-gray-400 font-medium"
+          >
+            © {new Date().getFullYear()} Samsul Maarif. All rights reserved.
+          </motion.p>
+
+          <motion.ul 
+            className="flex items-center gap-8"
+            variants={itemVariants}
+          >
+            {socialLinks.map(({ name, url, Icon }) => (
+              <motion.li key={name} variants={socialLinkVariants} whileHover="hover">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-300"
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium">{name}</span>
+                </a>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </motion.div>
+      </motion.div>
+    </motion.footer>
   );
 }
 
