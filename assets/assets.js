@@ -12,6 +12,11 @@ import git from './git.png';
 import mongodb from './mongodb.png';
 import Laravel from './Laravel.png';
 import IDX from './IDX.png';
+import postman from './postman.png';
+import ThunderClient from './ThunderClient.png';
+import GitHub from './GitHub.png';
+import GitHubWhite from './GithubWhite.png';
+import TailwindCSS from './TailwindCSS.png';
 import right_arrow_white from './right-arrow-white.png';
 import logo from './logo.png';
 import logo_dark from './logo_dark.png';
@@ -57,6 +62,11 @@ export const assets = {
     mongodb,
     Laravel,
     IDX,
+    postman,
+    ThunderClient,
+    GitHub,
+    GitHubWhite,
+    TailwindCSS,
     right_arrow_white,
     logo,
     logo_dark,
@@ -127,5 +137,9 @@ export const toolsData = [
     { src: assets.figma, url: 'https://www.figma.com/' },
     { src: assets.git, url: 'https://git-scm.com/' },
     { src: assets.Laravel, url: 'https://laravel.com/' },
-    { src: assets.IDX, url: 'https://idx.dev//' }
+    { src: assets.IDX, url: 'https://idx.dev/' },
+    { src: assets.postman, url: 'https://www.postman.com/' },
+    { src: assets.ThunderClient, url: 'https://www.thunderclient.com/' },
+    { src: assets.TailwindCSS, url: 'https://tailwindcss.com/' },
+    { src: assets.GitHub, srcDark: assets.GitHubWhite, url: 'https://github.com/' }, 
 ];

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { assets } from "@/assets/assets";
 import { motion } from "motion/react";
@@ -8,6 +8,24 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isDarkMode }) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    try {
+      setIsDownloading(true);
+      const googleDriveUrl = 'https://drive.google.com/file/d/1WK0QNoHXwdD5f2I_SwutSlW3IlYRMXsJ/view?usp=drive_link';
+      window.open(googleDriveUrl, '_blank');
+      
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Failed to download resume. Please try again later.');
+    } finally {
+      setTimeout(() => {
+        setIsDownloading(false);
+      }, 2000);
+    }
+  };
+
   return (
     <div 
       id="header" 
@@ -53,17 +71,22 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode }) => {
       </motion.p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <motion.a
+        <motion.button
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 1 }}
-          href="/sample-resume.pdf"
-          download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white dark:text-black"
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className={`px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white dark:text-black
+            ${isDownloading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-gray-50 active:bg-gray-100'}`}
         >
-          Download My Resume{" "}
-          <Image src={assets.download_icon} alt="download" className="w-4" />
-        </motion.a>
+          {isDownloading ? "Downloading..." : "Download My Resume"}{" "}
+          <Image 
+            src={assets.download_icon} 
+            alt="download" 
+            className={`w-4 ${isDownloading ? 'animate-bounce' : ''}`} 
+          />
+        </motion.button>
       </div>
     </div>
   );

@@ -117,7 +117,7 @@ const About: React.FC<AboutProps> = ({ isDarkMode }) => {
                     whileHover={{ scale: 1.1 }}
                     className="flex items-center justify-center w-full h-full border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
                   >
-                    <Image src={tool.src} alt="tool" className="w-5 sm:w-7" />
+                    <Image src={tool.srcDark && isDarkMode ? tool.srcDark : tool.src} alt="" className="w-5 sm:w-7" />
                   </motion.li>
                 </a>
               ))}
