@@ -10,6 +10,8 @@ import firebase from './firebase.png';
 import figma from './figma.png';
 import git from './git.png';
 import mongodb from './mongodb.png';
+import Laravel from './Laravel.png';
+import IDX from './IDX.png';
 import right_arrow_white from './right-arrow-white.png';
 import logo from './logo.png';
 import logo_dark from './logo_dark.png';
@@ -36,8 +38,10 @@ import send_icon from './send-icon.png';
 import right_arrow_bold from './right-arrow-bold.png';
 import right_arrow_bold_dark from './right-arrow-bold-dark.png';
 import Programmer from './Programmer.png';
+import Profile from './Profile.png';
 
 export const assets = {
+    Profile,
     Programmer,
     user_image,
     code_icon,
@@ -51,6 +55,8 @@ export const assets = {
     figma,
     git,
     mongodb,
+    Laravel,
+    IDX,
     right_arrow_white,
     logo,
     logo_dark,
@@ -109,11 +115,17 @@ export const serviceData = [
 ]
 
 export const infoList = [
-    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'HTML, CSS, JavaScript React Js, Next Js' },
+    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'HTML, CSS, JavaScript React Js, Next Js, PHP' },
     { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Teknik Informatika  Universitas Pamulang' },
     { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built more than 5 projects' }
 ];
 
 export const toolsData = [
-    assets.vscode, assets.firebase, assets.mongodb, assets.figma, assets.git
+    { src: assets.vscode, url: 'https://code.visualstudio.com/' },
+    { src: assets.firebase, url: 'https://firebase.google.com/' },
+    { src: assets.mongodb, url: 'https://www.mongodb.com/' },
+    { src: assets.figma, url: 'https://www.figma.com/' },
+    { src: assets.git, url: 'https://git-scm.com/' },
+    { src: assets.Laravel, url: 'https://laravel.com/' },
+    { src: assets.IDX, url: 'https://idx.dev//' }
 ];

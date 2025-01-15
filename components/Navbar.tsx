@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { assets } from "@/assets/assets";
 import { motion } from "framer-motion";
+import { Phone } from "lucide-react";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -12,15 +13,39 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
   const [isScroll, setIsScroll] = useState(false);
   const sideMenuRef = useRef<HTMLUListElement | null>(null);
 
+  const navItems = [
+    { name: "Home", id: "header" },
+    { name: "About", id: "about" },
+    { name: "Services", id: "services" },
+    { name: "My Project", id: "project" },
+    { name: "Contact Me", id: "contact" },
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const navHeight = document.querySelector("nav")?.offsetHeight || 0;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navHeight;
+
+      window.scrollTo({
+        top: id === "header" ? 0 : offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    closeMenu();
+  };
+
   const openMenu = () => {
     if (sideMenuRef.current) {
-      sideMenuRef.current.style.transform = "translateX(-16rem)";
+      sideMenuRef.current.style.right = "0";
     }
   };
 
   const closeMenu = () => {
     if (sideMenuRef.current) {
-      sideMenuRef.current.style.transform = "translateX(16rem)";
+      sideMenuRef.current.style.right = "-16rem";
     }
   };
 
@@ -34,7 +59,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
     });
   }, []);
 
-  // Animasi untuk setiap huruf dalam MyPortofolio
   const letterVariants = {
     initial: { y: -20, opacity: 0 },
     animate: (i: number) => ({
@@ -43,16 +67,16 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
       transition: {
         delay: i * 0.1,
         type: "spring",
-        stiffness: 100
-      }
+        stiffness: 100,
+      },
     }),
     hover: {
       scale: 1.1,
       rotate: [0, 5, -5, 0],
       transition: {
-        duration: 0.3
-      }
-    }
+        duration: 0.3,
+      },
+    },
   };
 
   const navItemVariants = {
@@ -62,9 +86,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 10
-      }
-    }
+        damping: 10,
+      },
+    },
   };
 
   const contactButtonVariants = {
@@ -74,16 +98,16 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 10
-      }
-    }
+        damping: 10,
+      },
+    },
   };
 
   const themeButtonVariants = {
-    hover: { 
+    hover: {
       rotate: 180,
-      transition: { duration: 0.3 }
-    }
+      transition: { duration: 0.3 },
+    },
   };
 
   const logoText = "MyPortofolio";
@@ -108,13 +132,13 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
             : ""
         }`}
       >
-        <motion.div 
+        <motion.div
           className="flex items-end gap-2 text-xl md:text-2xl mb-3 mt-3 font-jakarta"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
           <div className="flex">
-            {logoText.split('').map((letter, index) => (
+            {logoText.split("").map((letter, index) => (
               <motion.span
                 key={index}
                 variants={letterVariants}
@@ -123,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
                 whileHover="hover"
                 custom={index}
                 className="inline-block cursor-default"
-                style={{ display: 'inline-block' }}
+                style={{ display: "inline-block" }}
               >
                 {letter}
               </motion.span>
@@ -138,30 +162,30 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
               : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
           }`}
         >
-          {["Home", "About", "Services", "My Project", "Contact Me"].map((item, index) => (
+          {navItems.map((item, index) => (
             <motion.li
-              key={item}
+              key={item.name}
               variants={navItemVariants}
               whileHover="hover"
               custom={index}
             >
-              <a 
-                href={`#${item.toLowerCase().replace(" ", "")}`} 
+              <button
+                onClick={() => scrollToSection(item.id)}
                 className="font-jakarta relative group"
               >
-                {item}
+                {item.name}
                 <motion.span
                   className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-800 dark:bg-white group-hover:w-full transition-all duration-300"
                   initial={{ width: "0%" }}
                   whileHover={{ width: "100%" }}
                 />
-              </a>
+              </button>
             </motion.li>
           ))}
         </ul>
 
         <div className="flex items-center gap-4">
-          <motion.button 
+          <motion.button
             variants={themeButtonVariants}
             whileHover="hover"
             onClick={() => setIsDarkMode((prev) => !prev)}
@@ -174,26 +198,26 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
           </motion.button>
 
           <motion.a
-  variants={contactButtonVariants}
-  whileHover="hover"
-  href="https://wa.me/6285782786942" 
-  target="_blank" 
-  rel="noopener noreferrer" 
-  className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-poppins dark:border-white/50"
->
-  Contact
-  <Image
-    src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon}
-    alt="arrow icon"
-    className="w-3 inline"
-  />
-</motion.a>
+            variants={contactButtonVariants}
+            whileHover="hover"
+            href="https://wa.me/6285782786942"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center px-4 py-2.5 border border-gray-500 rounded-full font-poppins dark:border-white/50 lg:gap-3 lg:px-10 lg:py-2.5 lg:ml-4"
+          >
+            {/* Icon tampil di semua ukuran layar */}
+            <Phone
+              size={24}
+              className={isDarkMode ? "text-white" : "text-gray-800"}
+            />
+            {/* Teks hanya untuk desktop */}
+            <span className="hidden lg:block">Contact</span>
+          </motion.a>
 
-
-          <motion.button 
+          <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="block md:hidden ml-3" 
+            className="block md:hidden ml-3"
             onClick={openMenu}
           >
             <Image
@@ -206,12 +230,12 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
 
         <motion.ul
           ref={sideMenuRef}
-          initial={{ x: "100%" }}
-          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white"
+          initial={{ right: "-16rem" }}
+          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition-all duration-500 dark:bg-darkHover dark:text-white"
         >
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.1, rotate: 90 }}
-            className="absolute right-6 top-6" 
+            className="absolute right-6 top-6"
             onClick={closeMenu}
           >
             <Image
@@ -220,21 +244,20 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
               className="w-5 cursor-pointer"
             />
           </motion.div>
-          {["Home", "About", "Services", "My Project", "Contact Me"].map((item, index) => (
+          {navItems.map((item, index) => (
             <motion.li
-              key={item}
+              key={item.name}
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ x: 10, scale: 1.05 }}
             >
-              <a 
-                href={`#${item.toLowerCase().replace(" ", "")}`} 
+              <button
+                onClick={() => scrollToSection(item.id)}
                 className="font-jakarta"
-                onClick={closeMenu}
               >
-                {item}
-              </a>
+                {item.name}
+              </button>
             </motion.li>
           ))}
         </motion.ul>
