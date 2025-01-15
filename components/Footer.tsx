@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Pastikan useState di-import
+import React, { useState } from 'react'; 
 import Image from 'next/image';
 import { assets } from '@/assets/assets';
 import { motion } from 'framer-motion';
@@ -25,7 +25,7 @@ const EmailCopy: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const handleEmailClick = () => {
     navigator.clipboard.writeText("samsulmaarif1076@gmail.com").then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Reset setelah 2 detik
+      setTimeout(() => setCopied(false), 2000); 
     });
   };
 
